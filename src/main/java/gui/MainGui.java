@@ -27,6 +27,7 @@ public class MainGui extends Application {
 
             stage.setScene(scene);
             stage.setTitle("Btc price alert");
+            stage.setResizable(false);
             stage.show();
 
 

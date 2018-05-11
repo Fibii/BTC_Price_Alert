@@ -8,7 +8,7 @@ import Api.*;
 
 import java.io.IOException;
 
-public class Bitcoin {
+public class Bitcoin implements Runnable {
 
     private OkHttpClient client;
 
@@ -67,7 +67,10 @@ public class Bitcoin {
         return value;
     }
 
-
+    @Override public void run(){
+        //call the parseTheJson so it will update every now and then
+        parseTheJson();
+    }
 }
 
 /*
