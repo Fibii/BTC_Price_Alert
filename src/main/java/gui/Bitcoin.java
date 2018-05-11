@@ -1,3 +1,5 @@
+package gui;
+
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -46,15 +48,29 @@ public class Bitcoin {
 
     public double getUsdValue(){
         CoindeskAPI coindeskAPI = parseTheJson();
-        double usdValue = Double.parseDouble(coindeskAPI.getBpi().getUSD().toString());
+        double value = Double.parseDouble(coindeskAPI.getBpi().getUSD().toString());
 
-        return usdValue;
+        return value;
+    }
+
+    public double getEurValue(){
+        CoindeskAPI coindeskAPI = parseTheJson();
+        double value = Double.parseDouble(coindeskAPI.getBpi().getEUR().toString());
+
+        return value;
+    }
+
+    public double getGbpValue(){
+        CoindeskAPI coindeskAPI = parseTheJson();
+        double value = Double.parseDouble(coindeskAPI.getBpi().getGBP().toString());
+
+        return value;
     }
 
 
 }
 
 /*
-    to do : threads
-            
+    to do : threads so you update every min or so in the gui
+
  */

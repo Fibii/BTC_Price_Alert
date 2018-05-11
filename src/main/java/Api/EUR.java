@@ -65,7 +65,7 @@ public class EUR
     @Override
     public String toString()
     {
-        return "ClassPojo [rate = "+rate+", symbol = "+symbol+", description = "+description+", rate_float = "+rate_float+", code = "+code+"]";
+        return rate_float;
     }
 }
 
