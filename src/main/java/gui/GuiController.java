@@ -6,12 +6,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-import java.io.File;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -34,30 +33,31 @@ public class GuiController {
     @FXML
     private Button setBtn;
     private GuiProcessor guiProcessor;
-    private Media media;
-    private MediaPlayer mediaPlayer;
-    private File file;
 
     private int type;
     private  ScheduledExecutorService scheduledExecutorService;
     private  Runnable r1;
+    private  Runnable r2;
+    private double input;
+    private MusikPlayer musikPlayer;
+
 
     public GuiController(){
         guiProcessor  = new GuiProcessor();
+        musikPlayer = new MusikPlayer();
 
-        file = new File("src/main/java/np.mp3");
-        media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-
-        //create a runnable that calls the initialize method
+        //creating a runnable to use threads
         r1 = new Runnable() {
             @Override
             public void run() {
+
                 choiceBoxListener();
+               // musikPlayer.playMusic();
             }
         };
 
-        //create scheduled thread that class t1
+
+        //create scheduled thread
         scheduledExecutorService =
                 Executors.newScheduledThreadPool(1);
 
@@ -77,6 +77,9 @@ public class GuiController {
     }
 
     public void choiceBoxListener(){
+        /* the purpose of this method is to change the value of btc
+        when the user changes the value of the choicebox */
+
 
         //set the btc price by default
         btcPriceText.setText("current btc price: " +
@@ -89,6 +92,9 @@ public class GuiController {
 
     }
 
+
+
+
     @FXML
     public void initialize(){
 
@@ -99,10 +105,12 @@ public class GuiController {
         //select usd by default
         choiceBox.getSelectionModel().selectFirst();
 
-
+        musikPlayer.setType(choiceboxType());
         choiceBoxListener();
 
-        scheduledExecutorService.scheduleAtFixedRate(r1,0,1, TimeUnit.MINUTES);
+
+        scheduledExecutorService.scheduleAtFixedRate(r1, 0, 2, TimeUnit.SECONDS);
+        scheduledExecutorService.scheduleAtFixedRate(musikPlayer, 0, 2, TimeUnit.SECONDS);
 
     }
 
@@ -110,25 +118,16 @@ public class GuiController {
 
     @FXML
     void setBtn_Click(ActionEvent event) {
+
         try{
             //get the user input & parse it ..
-            double input = Double.parseDouble(textField.getText());
-
-            int type = 0;
-
-            if(guiProcessor.isLessThanThreshold(input,this.type)){
-                //errorText.setText("Good");
-               // errorText.setFill(Color.GREEN);
-                mediaPlayer.setVolume(1);
-                mediaPlayer.play();
-            } else {
-                errorText.setText("not below threshold");
-            }
+            this.input = Double.parseDouble(textField.getText());
+            musikPlayer.setUserInput(input);
 
         }catch  (Exception e){
-           e.printStackTrace();
-           // errorText.setFill(Color.RED);
-           // errorText.setText("Please only use numbers");
+           //e.printStackTrace();
+           errorText.setFill(Color.RED);
+            errorText.setText("Please only use numbers");
         }
     }
 
