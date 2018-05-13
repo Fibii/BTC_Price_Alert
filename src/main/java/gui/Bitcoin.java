@@ -16,8 +16,6 @@ public class Bitcoin implements Runnable {
         client = new OkHttpClient();
     }
 
-
-
     private String getJson(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url)
@@ -28,9 +26,10 @@ public class Bitcoin implements Runnable {
     }
 
     private CoindeskAPI parseTheJson(){
-        //get the json
+
         String json = null;
 
+        //get the json
         try{
             json = getJson("https://api.coindesk.com/v1/bpi/currentprice.json");
         }catch (Exception e){
@@ -47,23 +46,20 @@ public class Bitcoin implements Runnable {
     }
 
     public double getUsdValue(){
-        CoindeskAPI coindeskAPI = parseTheJson();
+         CoindeskAPI coindeskAPI = parseTheJson();
         double value = Double.parseDouble(coindeskAPI.getBpi().getUSD().toString());
-
         return value;
     }
 
     public double getEurValue(){
         CoindeskAPI coindeskAPI = parseTheJson();
         double value = Double.parseDouble(coindeskAPI.getBpi().getEUR().toString());
-
         return value;
     }
 
     public double getGbpValue(){
         CoindeskAPI coindeskAPI = parseTheJson();
         double value = Double.parseDouble(coindeskAPI.getBpi().getGBP().toString());
-
         return value;
     }
 
@@ -72,8 +68,3 @@ public class Bitcoin implements Runnable {
         parseTheJson();
     }
 }
-
-/*
-    to do : threads so you update every min or so in the gui
-
- */

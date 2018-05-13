@@ -1,5 +1,4 @@
 package gui;
-import java.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -8,9 +7,7 @@ public class GuiProcessor  {
 
    private Bitcoin btc;
 
-   private double input;
-
-    public GuiProcessor(){
+     GuiProcessor(){
       btc = new Bitcoin();
 
        //automatically update the price every minute
@@ -22,10 +19,7 @@ public class GuiProcessor  {
 
     public boolean isLessThanThreshold(int type, double userInput){
         //check if the user input is less than bitcoin's price
-
-
         boolean status = false;
-
         double value = currentBtcPrice(type);
 
         if (value < userInput){
@@ -59,9 +53,4 @@ public class GuiProcessor  {
         return value;
     }
 
-    public void setInput(double input){
-        //this method sets the input variable when the "set" button is clicked
-         this.input = input;
-
-    }
 }

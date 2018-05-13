@@ -3,13 +3,11 @@ package gui;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-
 import java.io.File;
 
 public class MusikPlayer implements Runnable{
 
     private GuiProcessor guiProcessor ;
-
     private Media media;
     private MediaPlayer mediaPlayer;
     private File file;
@@ -17,7 +15,7 @@ public class MusikPlayer implements Runnable{
     private int type;
 
 
-    public MusikPlayer(){
+    MusikPlayer(){
         guiProcessor = new GuiProcessor();
 
         file = new File("src/main/java/np.mp3");
@@ -30,7 +28,7 @@ public class MusikPlayer implements Runnable{
         this.type = type;
     }
 
-    public int getType(){
+    private int getType(){
         return this.type;
     }
 
@@ -38,17 +36,16 @@ public class MusikPlayer implements Runnable{
         this.userInput = input;
     }
 
-    public double getUserInput(){
+    private double getUserInput(){
         return  this.userInput;
     }
     public void playMusic(){
         if(guiProcessor.isLessThanThreshold(getType(),getUserInput())) {
             mediaPlayer.setVolume(1);
             mediaPlayer.play();
-            System.out.println("playMusic() is reachable");
-            //so it keeps printing this, but the music does not play
+            //reset the player to the start of the song
+            mediaPlayer.seek(Duration.seconds(0));
         }
-
     }
 
     @Override
